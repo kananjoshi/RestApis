@@ -1,9 +1,10 @@
+from rest_framework.response import Response
 
 from accounts.serializers import UserSerializer
 from django.contrib.auth.models import User
 
 from rest_framework import status
-from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token, ObtainJSONWebToken
+from rest_framework_jwt.views import ObtainJSONWebToken
 
 class JSONWebTokenAPIOverride(ObtainJSONWebToken):
     """
@@ -18,7 +19,7 @@ class JSONWebTokenAPIOverride(ObtainJSONWebToken):
             if response and response.status_code == status.HTTP_200_OK:
                 token = response.data.get('token')
                 user = User.objects.filter(
-                    email=request.data['username']).first()
+                    email=request.data['email']).first()
 
                 response.data = {
                     "status": 200,

@@ -11,16 +11,15 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        depth = 3
         fields = ('username', 'id', 'email')
 
 class CustomJWTSerializer(JSONWebTokenSerializer):
-    username_field = 'username'
+    username_field = 'email'
 
     def validate(self, attrs):
         success = False
         password = attrs.get("password")
-        user_obj = User.objects.filter(email=attrs.get("username").lower()).first()
+        user_obj = User.objects.filter(email=attrs.get("email").lower()).first()
 
         if user_obj is not None:
             credentials = {

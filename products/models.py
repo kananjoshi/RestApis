@@ -1,16 +1,17 @@
 from django.db import models
 from django.utils.translation import ugettext as _
+from mptt.models import MPTTModel, TreeForeignKey
 
 
 class Category(models.Model):
-    name = models.CharField(_("Product"), max_length=50, blank=True, null=True)
+    name = models.CharField(_("Product Name"), max_length=50, blank=True, null=True)
 
     class Meta:
         verbose_name = _("Category")
         verbose_name_plural = _("Categories")
 
     def __str__(self):
-        return self.name
+        return "{}".format(self.name)
 
 
 class Product(models.Model):
@@ -24,4 +25,4 @@ class Product(models.Model):
         verbose_name_plural = _("Products")
 
     def __str__(self):
-        return self.name
+        return "{}".format(self.name)
